@@ -11,8 +11,8 @@ Non-opinionated React Admin System boilerplate integrated with decentralized com
 
 ## Usage
 ```bash
-$ git clone https://github.com/AlanWei/react-boilerplate-pro.git
-$ cd react-boilerplate-pro
+$ git clone https://github.com/chenqiao123/nimiceshi.git
+$ cd mimiceshi
 $ yarn install
 $ yarn mock:server    # start mock data server at http://localhost:3000, npm run mock:server also works
 $ yarn dev            # start webpack-dev-server in another terminal window at http://localhost:8080, npm run dev also works
