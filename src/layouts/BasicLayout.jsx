@@ -9,7 +9,15 @@ import get from 'lodash/get';
 import map from 'lodash/map';
 import head from 'lodash/head';
 import isEmpty from 'lodash/isEmpty';
-import { Avatar, Dropdown, Menu, Icon, Breadcrumb, Popover } from 'antd';
+import {
+  Avatar,
+  Dropdown,
+  Menu,
+  Icon,
+  Breadcrumb,
+  Popover,
+} from 'antd';
+
 import Sider from 'react-sider';
 import 'react-sider/lib/index.css';
 import menuData from 'app/config/menu';
@@ -50,9 +58,10 @@ class BasicLayout extends Component {
 
   formatMenuData = menu => (
     map(menu, (item) => {
+      const newLocal = this.props.intl;
       const result = {
         ...item,
-        name: this.props.intl.formatMessage({ id: item.name }),
+        name: newLocal.formatMessage({ id: item.name }),
       };
 
       if (item.children) {
@@ -78,16 +87,19 @@ class BasicLayout extends Component {
         {intl.formatMessage({ id: 'basicLayout_readall_notice' })}
       </div>
     )
-      :
-      map(notices, notice => (
+      : map(notices, notice => (
         <div
           key={notice.id}
           className={`${prefixCls}-noticeItem`}
           onClick={() => deleteNotice(notice.id)}
           role="presentation"
         >
-          <div className={`${prefixCls}-noticeTitle`}>{notice.title}</div>
-          <div className={`${prefixCls}-noticeMessage`}>{notice.message}</div>
+          <div className={`${prefixCls}-noticeTitle`}>
+            {notice.title}
+          </div>
+          <div className={`${prefixCls}-noticeMessage`}>
+            {notice.message}
+          </div>
         </div>
       ));
 
@@ -95,11 +107,15 @@ class BasicLayout extends Component {
       <Menu>
         <Menu.Item disabled className={`${prefixCls}-userMenuItem`}>
           <Icon type="user" className={`${prefixCls}-userMenuIcon`} />
-          <span>{intl.formatMessage({ id: 'basicLayout_profile' })}</span>
+          <span>
+            {intl.formatMessage({ id: 'basicLayout_profile' })}
+          </span>
         </Menu.Item>
         <Menu.Item disabled className={`${prefixCls}-userMenuItem`}>
           <Icon type="setting" className={`${prefixCls}-userMenuIcon`} />
-          <span>{intl.formatMessage({ id: 'basicLayout_setting' })}</span>
+          <span>
+            {intl.formatMessage({ id: 'basicLayout_setting' })}
+          </span>
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item className={`${prefixCls}-userMenuItem`}>
@@ -108,7 +124,9 @@ class BasicLayout extends Component {
             role="presentation"
           >
             <Icon type="logout" className={`${prefixCls}-userMenuIcon`} />
-            <span>{intl.formatMessage({ id: 'basicLayout_logout' })}</span>
+            <span>
+              {intl.formatMessage({ id: 'basicLayout_logout' })}
+            </span>
           </div>
         </Menu.Item>
       </Menu>
@@ -144,16 +162,19 @@ class BasicLayout extends Component {
     return (
       <Breadcrumb className={`${prefixCls}-breadcrumb`}>
         {map(breadcrumbData, (item, idx) => (
-          idx === breadcrumbData.length - 1 ?
-            <Breadcrumb.Item key={item.href}>
-              {intl.formatMessage({ id: item.text })}
-            </Breadcrumb.Item>
-            :
-            <Breadcrumb.Item key={item.href}>
-              <Link href={item.href} to={item.href}>
+          idx === breadcrumbData.length - 1
+            ? (
+              <Breadcrumb.Item key={item.href}>
                 {intl.formatMessage({ id: item.text })}
-              </Link>
-            </Breadcrumb.Item>
+              </Breadcrumb.Item>
+            )
+            : (
+              <Breadcrumb.Item key={item.href}>
+                <Link href={item.href} to={item.href}>
+                  {intl.formatMessage({ id: item.text })}
+                </Link>
+              </Breadcrumb.Item>
+            )
         ))}
       </Breadcrumb>
     );
@@ -170,13 +191,18 @@ class BasicLayout extends Component {
     return (
       <div className={`${prefixCls}-pageHeader`}>
         {this.renderBreadcrumb()}
-        <div className={`${prefixCls}-pageTitle`}>{pageTitleStr}</div>
+        <div className={`${prefixCls}-pageTitle`}>
+          {pageTitleStr}
+        </div>
       </div>
     );
   }
 
-  renderFooter = () => (
-    <div className={`${this.props.prefixCls}-footer`}>
+  renderFooter = prefixCls => (
+    <div className={
+      `${prefixCls}-footer`
+    }
+    >
       Copyright © 2018
     </div>
   )
@@ -221,7 +247,9 @@ class BasicLayout extends Component {
             <div className={`${prefixCls}-mainContent`}>
               {children}
             </div>
-            {this.renderFooter()}
+            {
+              this.renderFooter(prefixCls)
+            }
           </div>
         </div>
         {this.renderNotification()}

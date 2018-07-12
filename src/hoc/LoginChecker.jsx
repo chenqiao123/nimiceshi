@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+
 const propTypes = {
   isLogin: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
@@ -8,19 +9,30 @@ const propTypes = {
 
 class LoginChecker extends Component {
   componentDidMount() {
-    if (!this.props.isLogin) {
-      this.props.history.push('/login');
+    const {
+      isLogin,
+      history,
+    } = this.props;
+    if (!isLogin) {
+      history.push('/login');
     }
   }
 
   componentDidUpdate() {
-    if (!this.props.isLogin) {
-      this.props.history.push('/login');
+    const {
+      isLogin,
+      history,
+    } = this.props;
+    if (!isLogin) {
+      history.push('/login');
     }
   }
 
   render() {
-    return this.props.children;
+    const {
+      children,
+    } = this.props;
+    return children;
   }
 }
 
